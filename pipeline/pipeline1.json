@@ -20,11 +20,7 @@
 						"type": "DataFlowReference"
 					},
 					"staging": {
-						"linkedService": {
-							"referenceName": "AzureBlobStorage1",
-							"type": "LinkedServiceReference"
-						},
-						"folderPath": "865b0ac0-309e-4acc-a749-8f00ced3fe42-azureml-blobstore"
+						"folderPath": ""
 					},
 					"compute": {
 						"coreCount": 8,
