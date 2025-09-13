@@ -1,0 +1,80 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "dataset.csv",
+				"fileSystem": "865b0ac0-309e-4acc-a749-8f00ced3fe42-azureml-blobstore"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "age",
+				"type": "String"
+			},
+			{
+				"name": "sex",
+				"type": "String"
+			},
+			{
+				"name": "cp",
+				"type": "String"
+			},
+			{
+				"name": "trestbps",
+				"type": "String"
+			},
+			{
+				"name": "chol",
+				"type": "String"
+			},
+			{
+				"name": "fbs",
+				"type": "String"
+			},
+			{
+				"name": "restecg",
+				"type": "String"
+			},
+			{
+				"name": "thalach",
+				"type": "String"
+			},
+			{
+				"name": "exang",
+				"type": "String"
+			},
+			{
+				"name": "oldpeak",
+				"type": "String"
+			},
+			{
+				"name": "slope",
+				"type": "String"
+			},
+			{
+				"name": "ca",
+				"type": "String"
+			},
+			{
+				"name": "thal",
+				"type": "String"
+			},
+			{
+				"name": "target",
+				"type": "String"
+			}
+		]
+	}
+}

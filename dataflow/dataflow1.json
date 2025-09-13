@@ -1,0 +1,99 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filter1",
+					"description": "toInt(thalach)>160"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "alterRow1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          age as string,",
+				"          sex as string,",
+				"          cp as string,",
+				"          trestbps as string,",
+				"          chol as string,",
+				"          fbs as string,",
+				"          restecg as string,",
+				"          thalach as string,",
+				"          exang as string,",
+				"          oldpeak as string,",
+				"          slope as string,",
+				"          ca as string,",
+				"          thal as string,",
+				"          target as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          age,",
+				"          sex,",
+				"          cp,",
+				"          trestbps,",
+				"          chol,",
+				"          fbs,",
+				"          restecg,",
+				"          thalach,",
+				"          exang,",
+				"          oldpeak,",
+				"          slope1 = slope,",
+				"          ca,",
+				"          thal,",
+				"          target",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(toInteger(thalach)>160) ~> filter1",
+				"filter1 derive(sex = iif(toInteger(sex)==1,'Male','Female')) ~> derivedColumn1",
+				"derivedColumn1 aggregate(groupBy(sex),",
+				"     age = count(age)) ~> aggregate1",
+				"aggregate1 alterRow(upsertIf(true())) ~> alterRow1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['sex','age'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
